@@ -12,8 +12,7 @@ import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
 import swagger from 'swagger-ui-express';
-import { openapiSpecification } from '@/swagger';
-
+import swaggerJSDoc from 'swagger-jsdoc';
 class App {
   public app: express.Application;
   public env: string;
@@ -66,7 +65,18 @@ class App {
     });
   }
   private initializeSwagger() {
-    this.app.use('/docs', swagger.serve, swagger.setup(openapiSpecification));
+    const options = {
+      swaggerDefinition: {
+        info: {
+          title: 'REST API',
+          version: '1.0.0',
+          description: 'Example docs',
+        },
+      },
+      apis: ['swagger.yaml'],
+    };
+    const specs = swaggerJSDoc(options);
+    this.app.use('/api-docs', swagger.serve, swagger.setup(specs));
   }
 
   private initializeErrorHandling() {
