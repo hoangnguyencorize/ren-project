@@ -7,10 +7,3 @@ export class CreateUserDto {
   @IsString()
   public password: string;
 }
-
-export class LoginUserDto {
-  @IsString()
-  username: string;
-  @IsString()
-  password: string;
-}

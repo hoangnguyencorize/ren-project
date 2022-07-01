@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto, LoginUserDto } from '@dtos/users.dto';
+import { CreateUserDto } from '@dtos/users.dto';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { IUser } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
+import { LoginUserDto } from '@/dtos/auth.dto';
 class AuthController {
   public authService = new AuthService();
   public signUp = async (req: Request, res: Response, next: NextFunction) => {
