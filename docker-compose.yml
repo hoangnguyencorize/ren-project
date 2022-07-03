@@ -25,7 +25,26 @@ services:
     restart: 'unless-stopped'
     networks:
       - backend
-
+    links:
+      - mongo
+    depends_on:
+      - mongo
+  mongo:
+    image: mvertes/alpine-mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - backend
+  adminer:
+    image: mongo-express
+    container_name: adminer
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://mongo:27017
+    networks:
+      - backend
 networks:
   backend:
     driver: bridge
